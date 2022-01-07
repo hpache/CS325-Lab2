@@ -8,13 +8,12 @@
     Due: 5 January 2022
 -->
 
-<html>
+<html lang="EN">
 
     <head>
         <link rel="stylesheet" type="text/css" href="research.css">
+        <title> Research with Colby's Physics Department </title>
     </head>
-
-    <title> Research with Colby's Physics Department </title>
 
     <header>
         <ul class="navigation-bar">
@@ -55,7 +54,7 @@
     <article>
         <h1> My Thesis and Summer Research Work </h1>
 
-        Created on 01-04-2022 <time> 7:00 pm </time>
+        Created on 01-04-2022 7:00 pm <time datetime="2021-01-02T19:00"> Saturday </time> 
 
         <p> My research with the Colby Physics department during my undergrad career centers around this
             phenomena known as Electromagnetically Induced Transparency (<abbr>EIT</abbr>). EIT is the phenomena in which 
@@ -70,8 +69,10 @@
             rendering the medium transparent to the first laser.
         </p>
 
-        <img src="threeLevelModel.png" title = "Three Level Model" width="500" height="500">
-        <figcaption>Fig.1 - A diagram of EIT in a medium with three energy levels </figcaption>
+        <figure>
+            <img src="threeLevelModel.png" title = "Three Level Model" width="500" height="500">
+            <figcaption>Fig.1 - A diagram of EIT in a medium with three energy levels </figcaption>
+        </figure>
 
         <p> My research on EIT was mostly focused on the computational modeling of our experiment. I was also
             focused on improving the experiment's quality so that we can collect publish-worthy datasets and
@@ -96,98 +97,102 @@
             <code>superOperatorElements</code> method, and it calculates elements of the super-operator matrix.
             This matrix is responsible for taking into account the decay rates between energy levels within the 
             medium (see figure 1).
+        </p>
 
-            <pre><code>
-                def superOperatorElements(self, allowedTransitions, left, right):
+        <pre><code>
+            def superOperatorElements(self, allowedTransitions, left, right):
 
-                    # Initializing placeholder list. Using a list for the sum() function
-                    # Which just adds all the elements within a list!
-                    self.lindbladMaster = []
-            
-                    # Initializing input variables
-                    self.allowedTransitions = allowedTransitions
-                    self.left = left
-                    self.right = right
-            
-                    # This section goes through a possible transition, computes the lindblad equation
-                    # and it then appends that result to the lindbladMaster list.
-                    for transitions in self.allowedTransitions:
-                        self.i = transitions[0]
-                        self.f = transitions[1]
-            
-                        # Initialize Symbols
-                        self.gamma = Symbol('Gamma_{}{}'.format(self.i,self.f))
-                        self.rho_ii = Symbol('rho_{}{}'.format(self.i,self.i))
-                        self.rho_iright = Symbol('rho_{}{}'.format(self.i,self.right))
-                        self.rho_lefti = Symbol('rho_{}{}'.format(self.left,self.i))
-            
-                        # Initializing Bras and Kets for the Lindblad Equation
-                        self.iKet = OrthogonalKet(self.i)
-                        self.iBra = OrthogonalBra(self.i)
-                        
-                        self.fKet = OrthogonalKet(self.f)
-                        self.fBra = OrthogonalBra(self.f)
-            
-                        self.Right = OrthogonalKet(self.right)
-                        self.Left = OrthogonalBra(self.left)
-            
-                        # Lindblad equation, look in notes to see what this is!
-                        self.L = self.gamma * ( (self.Left*self.fKet).doit() * self.rho_ii * (self.fBra*self.Right).doit() \
-                                - 1/2*( (self.Left*self.iKet).doit() * self.rho_iright + self.rho_lefti * (self.iBra*self.Right).doit() ) )
-                        self.lindbladMaster.append(self.L)
-            
-                    self.total = sum(self.lindbladMaster)
-            
-                    return(self.total)
-            </code></pre>
+                # Initializing placeholder list. Using a list for the sum() function
+                # Which just adds all the elements within a list!
+                self.lindbladMaster = []
+        
+                # Initializing input variables
+                self.allowedTransitions = allowedTransitions
+                self.left = left
+                self.right = right
+        
+                # This section goes through a possible transition, computes the lindblad equation
+                # and it then appends that result to the lindbladMaster list.
+                for transitions in self.allowedTransitions:
+                    self.i = transitions[0]
+                    self.f = transitions[1]
+        
+                    # Initialize Symbols
+                    self.gamma = Symbol('Gamma_{}{}'.format(self.i,self.f))
+                    self.rho_ii = Symbol('rho_{}{}'.format(self.i,self.i))
+                    self.rho_iright = Symbol('rho_{}{}'.format(self.i,self.right))
+                    self.rho_lefti = Symbol('rho_{}{}'.format(self.left,self.i))
+        
+                    # Initializing Bras and Kets for the Lindblad Equation
+                    self.iKet = OrthogonalKet(self.i)
+                    self.iBra = OrthogonalBra(self.i)
+                    
+                    self.fKet = OrthogonalKet(self.f)
+                    self.fBra = OrthogonalBra(self.f)
+        
+                    self.Right = OrthogonalKet(self.right)
+                    self.Left = OrthogonalBra(self.left)
+        
+                    # Lindblad equation, look in notes to see what this is!
+                    self.L = self.gamma * ( (self.Left*self.fKet).doit() * self.rho_ii * (self.fBra*self.Right).doit() \
+                            - 1/2*( (self.Left*self.iKet).doit() * self.rho_iright + self.rho_lefti * (self.iBra*self.Right).doit() ) )
+                    self.lindbladMaster.append(self.L)
+        
+                self.total = sum(self.lindbladMaster)
+        
+                return(self.total)
+        </code></pre>
 
+        <figure>
             <table>
 
                 <colgroup>
                     <col span="1" class="col-states">
+                    <col span="4">
                 </colgroup>
 
                 <tr class="tr-states">
-                    <th> </th>
-                    <th> </th>
-                    <th> State 1 </th>
-                    <th> State 2 </th>
-                    <th> State 3 </th>
+                    <td> </td>
+                    <td> </td>
+                    <td> State 1 </td>
+                    <td> State 2 </td>
+                    <td> State 3 </td>
                 </tr>
                 <tr>
-                    <th> State 1</th>
-                    <th> </th>
-                    <th> 0 </th>
-                    <th> 1/2 </th>
-                    <th> 0 </th>
+                    <td> State 1</td>
+                    <td> </td>
+                    <td> 0 </td>
+                    <td> 1/2 </td>
+                    <td> 0 </td>
                 </tr>
                 <tr>
-                    <th> State 2 </th>
-                    <th> </th>
-                    <th> 1/4 </th>
-                    <th> 0 </th>
-                    <th> 1/4 </th>
+                    <td> State 2 </td>
+                    <td> </td>
+                    <td> 1/4 </td>
+                    <td> 0 </td>
+                    <td> 1/4 </td>
                 </tr>
                 <tr>
-                    <th> State 3 </th>
-                    <th> </th>
-                    <th> 0 </th>
-                    <th> 1/2 </th>
-                    <th> 0</th>
+                    <td> State 3 </td>
+                    <td> </td>
+                    <td> 0 </td>
+                    <td> 1/2 </td>
+                    <td> 0</td>
                 </tr>
             </table>
             <figcaption> Table 1 - Example output of the <code> superOperatorElements </code> method organized in a table </figcaption>
+        </figure>
 
-        </p><br>
+        <br>
 
         <p> If you would like to learn more about this research, the following link will redirect you to 
-            my thesis written during the 2021 Spring semester. 
-            
-            <details text="Test">
-                <summary> PDF of my Thesis </summary>
-                <iframe src="Thesis_2021.pdf" width="50%" height="100%"></iframe>
-            </details>
+            my thesis written during the 2021 Spring semester.
         </p>
+            
+        <details>
+            <summary> PDF of my Thesis </summary>
+            <iframe src="Thesis_2021.pdf" width="500" height="500"></iframe>
+        </details>
 
         <p> These are some helpful terms for this article </p>
         <dl>

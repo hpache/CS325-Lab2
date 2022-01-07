@@ -17,6 +17,7 @@ body {
     font-family: 'Times New Roman', Times, serif;
 }
 
+
 .emailLink {
     text-decoration: none;
     color: dodgerblue;
@@ -68,6 +69,6 @@ body {
     color: white;
 }
 
-#list {
+.resume-items {
     list-style: inside square;
 }
